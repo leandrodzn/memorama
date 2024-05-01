@@ -12,13 +12,13 @@ class MateriasManager{
     private $dbManager;
     private static $_instance;
 
-    // public function __construct(){
-    //     $this->dbManager = DataBaseManager::getInstance();
-    // }
+    public function __construct(){
+        $this->dbManager = DataBaseManager::getInstance();
+    }
 
-    public function __construct(DataBaseManager $dbManager) {
-        $this->dbManager = $dbManager;
-      }
+    // public function __construct(DataBaseManager $dbManager) {
+    //     $this->dbManager = $dbManager;
+    //   }
     
 
     public function __destruct(){

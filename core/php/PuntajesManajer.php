@@ -13,13 +13,13 @@ class PuntajesManajer {
     private $dbManager;
     private static $_instance;
 
-    // private function __construct() {
-    //     $this->dbManager = DataBaseManager::getInstance();
-    // }
+    private function __construct() {
+        $this->dbManager = DataBaseManager::getInstance();
+    }
 
-    public function __construct(DataBaseManager $dbManager) {
-        $this->dbManager = $dbManager;
-      }
+    // public function __construct(DataBaseManager $dbManager) {
+    //     $this->dbManager = $dbManager;
+    //   }
 
     public function __destruct() {
         /*
