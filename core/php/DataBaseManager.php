@@ -8,7 +8,7 @@
  */
 define('SERVER', 'localhost');
 define('USERNAME', 'root');
-define('PASSWORD', 'liverpool');
+define('PASSWORD', '');
 define('DB', 'memorama');
 
 class DataBaseManager {
