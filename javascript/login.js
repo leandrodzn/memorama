@@ -56,7 +56,7 @@ function verifyUser(response){
     } catch (e) {
         // Si la respuesta no es JSON válido, muestra un mensaje de error o maneja el caso según sea necesario
         console.log("Error: La respuesta del servidor no es un JSON válido");
-        console.log(response); // Muestra la respuesta del servidor para depurar
+        console.log(response); 
     }
 }
 
