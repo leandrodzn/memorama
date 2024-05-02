@@ -10,6 +10,7 @@ $(document).ready(function() {
     $("#pregunta-correctos").hide();
     $("#puntaje").val("0");
     asignarListenersPregunta();
+    
 
     var tiempo = 150;
     var url = window.location.toString();
@@ -36,6 +37,7 @@ $(document).ready(function() {
 
     pedirDatos(materia);
     iniciarContador(tiempo);
+    terminarPartida();
 
 
 });
@@ -266,6 +268,16 @@ function asignarListenersPregunta() {
     });
 }
 
+function terminarPartida() {
+    $("#terminar").unbind("click");
+
+    $("#terminar").click(function() {
+        clearInterval(intervaloContador);
+        console.log("Se la partida");
+        mostrarPartidaTerminada();
+    });
+}
+
 function colocarCartas(carta) {
     //revolvemos las cartas
     cartas.push(carta);
@@ -315,6 +327,10 @@ function mostrarTiempoTerminado() {
     mostrarModal();
 }
 
+function mostrarPartidaTerminada() {
+    $("#titulo-modal").text("¡Se acabó la partida!");
+    mostrarModal();
+}
 function mostrarGanaste() {
     $("#titulo-modal").text("¡Has Ganado!");
     mostrarModal();

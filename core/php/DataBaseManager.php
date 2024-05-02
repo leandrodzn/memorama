@@ -6,7 +6,7 @@
  * Date: 07/02/2016
  * Time: 07:55 PM
  */
-define('SERVER', 'localhost');
+define('SERVER', '127.0.0.1:3308');
 define('USERNAME', 'root');
 define('PASSWORD', '');
 define('DB', 'memorama');
