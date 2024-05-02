@@ -1,13 +1,11 @@
 /**
  * Created by Andre on 12/03/2016.
  */
-
-
 $(function(){
     $("#login").click(function(){
 
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+        var username = encodeURIComponent(document.getElementById("username").value);
+        var password = encodeURIComponent(document.getElementById("password").value);
 
         if(username == "" || password== ""){
             verifyUser(null);
@@ -23,7 +21,7 @@ $(function(){
             data:data,
             type: 'post',
             beforeSend: function () {
-                $(loginResponse).html("Procesando, espere por favor...");
+                $("#loginResponse").html("Procesando, espere por favor...");
             },
             success: function (response) {
                 verifyUser(response);
@@ -35,12 +33,14 @@ $(function(){
     })
 });
 
+
 function verifyUser(response){
     try {
+        // Verifica si la respuesta es JSON válido
         var userResponse = JSON.parse(response);
-        var locationToInsert =  $("#loginResponse");
 
-
+        // Si la respuesta es JSON válido, procesa la respuesta
+        var locationToInsert = $("#loginResponse");
         if (userResponse !== null) {
             var student = 0;
             var teacher = 1;
@@ -50,15 +50,13 @@ function verifyUser(response){
             } else if (userResponse[0].type == teacher) {
                 location.href = "sections/MenuTeacher.html";
             }
-
-
         } else {
-
             insertContentToPage("resources/responseLogin.html", locationToInsert);
-
         }
-    } catch (e){
-        console.log(e);
+    } catch (e) {
+        // Si la respuesta no es JSON válido, muestra un mensaje de error o maneja el caso según sea necesario
+        console.log("Error: La respuesta del servidor no es un JSON válido");
+        console.log(response); // Muestra la respuesta del servidor para depurar
     }
 }
 
