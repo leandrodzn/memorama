@@ -13,22 +13,23 @@ try {
 
     $session = new session();
     $user = $session->get("user");
+    
 
     if ($user == false) {
 
         echo "";
     } else {
+        echo json_encode($user);
+        // $query = "SELECT id, nombre FROM usuario WHERE id = $user";
 
-        $query = "SELECT id, nombre FROM usuario WHERE id = " . $user;
+        // $resultado = DataBaseManager::getInstance()->realizeQuery($query);
 
-        $resultado = DataBaseManager::getInstance()->realizeQuery($query);
-
-        if ($resultado != null) {
-            //echo $user;
-            echo json_encode($resultado);
-        } else {
-            echo "Error!";
-        }
+        // if ($resultado != null) {
+        //     //echo $user;
+        //     echo json_encode($resultado);
+        // } else {
+        //     echo "Error!";
+        // }
     }
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
