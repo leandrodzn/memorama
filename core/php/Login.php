@@ -9,41 +9,37 @@
 include "DataBaseManager.php";
 require_once("Session.php");
 
-// Check if username and password are set in $_POST
-// if (!isset($_POST["username"]) || !isset($_POST["password"])) {
-//     // Handle missing form data (e.g., echo error message)
-//     die("Missing username or password");
-//   }
-
 $username = $_POST["username"];
 $password = $_POST["password"];
 
-
 $database = DataBaseManager::getInstance();
-$query = "Select * FROM  usuario WHERE nombre = '$username' AND clave = '$password'";
-$result = $database->realizeQuery($query);
+
+// Utilizando sentencias preparadas para evitar la inyección SQL
+$query = "SELECT * FROM usuario WHERE nombre = ? AND clave = ?";
+$statement = $database->prepare($query);
+$statement->bind_param("ss", $username, $password);
+$statement->execute();
+$result = $statement->get_result();
+
 verifyLogin($result, $username);
 
 function verifyLogin($result, $username) {
     $message = null;
     $session = new session();
 
-    if (count($result) > 0) {
-
+    if ($result->num_rows > 0) {
         $user = array();
-
-        $user['type'] = $result[0]['tipo'];
-        $user['id'] = $result[0]['id'];
+        $row = $result->fetch_assoc();
+        $user['type'] = $row['tipo'];
+        $user['id'] = $row['id'];
 
         $session->set("user", $username);
-        $session->set("user", $result[0]['id']);
+        $session->set("user_id", $row['id']); // Guarda el ID del usuario en la sesión
         $usersList[] = $user;
 
         echo json_encode($usersList);
-        // return json_encode($usersList);
     } else {
         echo json_encode($message);
-        // return json_encode($message);
     }
 }
-
+?>

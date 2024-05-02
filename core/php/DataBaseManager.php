@@ -18,7 +18,6 @@ class DataBaseManager {
 
     /**
      * DataBaseManager constructor.
-     * @param $mysqli
      */
     private function __construct() {
         $this->mysqli = new mysqli(SERVER, USERNAME, PASSWORD, DB);
@@ -59,6 +58,10 @@ class DataBaseManager {
         } else {
             return null;
         }
+    }
+
+    public function prepare($query) {
+        return $this->mysqli->prepare($query);
     }
 
     public function close() {
