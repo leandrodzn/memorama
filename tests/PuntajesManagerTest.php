@@ -9,6 +9,8 @@ class PuntajesManagerTest extends TestCase {
   public function createMockDataBaseManager($expectedResults) {
     $mock = $this->createMock(DataBaseManager::class);
     $mock->method('realizeQuery')->willReturn($expectedResults);
+    $mock->method('insertQuery')->willReturn($expectedResults);
+
     return $mock;
   }
 
@@ -30,7 +32,7 @@ class PuntajesManagerTest extends TestCase {
     $resultado = $puntajesManajer->setPuntaje($idUsuario, $idMateria, $fecha, $dificultad, $puntaje, $foundPeers);
     
     // Verificar que la función retorna una cadena vacía (éxito)
-    $this->assertEquals("", $resultado);
+    $this->assertEquals(true, $resultado);
     }
 
     public function testNegativeSetPuntaje() {
@@ -51,7 +53,7 @@ class PuntajesManagerTest extends TestCase {
       $resultado = $puntajesManajer->setPuntaje($idUsuario, $idMateria, $fecha, $dificultad, $puntaje, $foundPeers);
       
       // Verificar que la función retorna el mensaje de error
-      $this->assertEquals("Error al insertar el puntaje", $resultado);
+      $this->assertEquals(false, $resultado);
       }
 
       public function testPositiveDeletePuntaje() {
@@ -70,7 +72,7 @@ class PuntajesManagerTest extends TestCase {
         $resultado = $puntajesManajer->deletePuntaje($idUsuario, $idMateria, $fecha, $dificultad);
       
         // Verificar que la función retorna una cadena vacía (éxito)
-        $this->assertEquals("", $resultado);
+        $this->assertEquals(true, $resultado);
       }
       
       public function testNegativeDeletePuntaje() {
@@ -89,7 +91,7 @@ class PuntajesManagerTest extends TestCase {
         $resultado = $puntajesManajer->deletePuntaje($idUsuario, $idMateria, $fecha, $dificultad);
       
         // Verificar que la función retorna el mensaje de error
-        $this->assertEquals("Error al eliminar el puntaje", $resultado);
+        $this->assertEquals(false, $resultado);
       }
 
       public function testGetAllPuntajeForUsuario_SingleResult() {

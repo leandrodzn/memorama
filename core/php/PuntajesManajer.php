@@ -13,13 +13,21 @@ class PuntajesManajer {
     private $dbManager;
     private static $_instance;
 
-    private function __construct() {
-        $this->dbManager = DataBaseManager::getInstance();
-    }
+    // private function __construct() {
+    //     $this->dbManager = DataBaseManager::getInstance();
+    // }
 
     // public function __construct(DataBaseManager $dbManager) {
     //     $this->dbManager = $dbManager;
-    //   }
+    // }
+
+    public function __construct(DataBaseManager $dbManager = null) {
+        if ($dbManager) {
+            $this->dbManager = $dbManager;
+        } else {
+            $this->dbManager = DataBaseManager::getInstance();
+        }
+    }
 
     public function __destruct() {
         /*
@@ -44,7 +52,7 @@ class PuntajesManajer {
         if (!is_bool($resultado)) {
             return $resultado;
         }
-        return "";
+        return $resultado;
     }
 
     public function deletePuntaje($idUsuario,$idMateria,$fecha,$dificultad){
@@ -56,7 +64,7 @@ class PuntajesManajer {
             return $resultado;
         }
 
-        return "";
+        return $resultado;
     }
 
     public function getAllPuntajeForUsuario($idUsuario) {
@@ -81,7 +89,7 @@ class PuntajesManajer {
         $resultado = $this->dbManager->realizeQuery($query);
 
         if ($resultado == null) {
-            return "tabla materia varia";
+            return "tabla materia vacia";
         } else {
             if (is_array($resultado)) {
                 return json_encode($resultado);
@@ -97,7 +105,7 @@ class PuntajesManajer {
         $resultado = $this->dbManager->realizeQuery($query);
 
         if ($resultado == null) {
-            return "tabla materia varia";
+            return "tabla materia vacia";
         } else {
             if (is_array($resultado)) {
                 return json_encode($resultado);
@@ -113,7 +121,7 @@ class PuntajesManajer {
         $resultado = $this->dbManager->realizeQuery($query);
 
         if($resultado == null){
-            return "tabla materia varia";
+            return "tabla materia vacia";
         }
         else{
             if(is_array($resultado)){

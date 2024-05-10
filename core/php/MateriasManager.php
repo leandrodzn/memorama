@@ -12,13 +12,21 @@ class MateriasManager{
     private $dbManager;
     private static $_instance;
 
-    public function __construct(){
-        $this->dbManager = DataBaseManager::getInstance();
-    }
+    // public function __construct(){
+    //     $this->dbManager = DataBaseManager::getInstance();
+    // }
 
     // public function __construct(DataBaseManager $dbManager) {
     //     $this->dbManager = $dbManager;
-    //   }
+    // }
+
+    public function __construct(DataBaseManager $dbManager = null) {
+        if ($dbManager) {
+            $this->dbManager = $dbManager;
+        } else {
+            $this->dbManager = DataBaseManager::getInstance();
+        }
+    }
     
 
     public function __destruct(){
@@ -62,7 +70,7 @@ class MateriasManager{
         if(!is_bool($resultado)){
             return $resultado;
         }
-        return "";
+        return $resultado;
     }
 
 
@@ -74,7 +82,7 @@ class MateriasManager{
         if(!is_bool($resultado)){
             return $resultado;
         }
-        return "";
+        return $resultado;
     }
 
     public function deleteMateria($idMateria){
@@ -86,7 +94,7 @@ class MateriasManager{
             return $resultado;
         }
 
-        return "";
+        return $resultado;
     }
 
     public function getAllMateria(){
@@ -99,7 +107,7 @@ class MateriasManager{
         }
         else{
             if(is_array($resultado)){
-                $matterList[] = $this->setValuesToResult($resultado);
+                $matterList = $this->setValuesToResult($resultado);
                 return json_encode($matterList);
             }
             else{
@@ -123,4 +131,15 @@ class MateriasManager{
 
         return $matterList;
     }
+
+    // private function setValuesToResult($result){
+    //     $matterList = array();
+    //     foreach ($result as $row) {
+    //         $matter = array();
+    //         $matter['id'] = $row['id'];
+    //         $matter['nombre'] = $row['nombre'];
+    //         $matterList[] = $matter;
+    //     }
+    //     return $matterList;
+    // }
 }

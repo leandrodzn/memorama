@@ -12,34 +12,32 @@ require_once("Session.php");
 $username = $_POST["username"];
 $password = $_POST["password"];
 
+
 $database = DataBaseManager::getInstance();
-
-// Utilizando sentencias preparadas para evitar la inyección SQL
-$query = "SELECT * FROM usuario WHERE nombre = ? AND clave = ?";
-$statement = $database->prepare($query);
-$statement->bind_param("ss", $username, $password);
-$statement->execute();
-$result = $statement->get_result();
-
+$query = "Select * FROM  usuario WHERE nombre = '$username' AND clave = '$password'";
+$result = $database->realizeQuery($query);
 verifyLogin($result, $username);
 
 function verifyLogin($result, $username) {
     $message = null;
     $session = new session();
 
-    if ($result->num_rows > 0) {
+    if (count($result) > 0) {
+
         $user = array();
-        $row = $result->fetch_assoc();
-        $user['type'] = $row['tipo'];
-        $user['id'] = $row['id'];
+
+        $user['type'] = $result[0]['tipo'];
+        $user['id'] = $result[0]['id'];
 
         $session->set("user", $username);
-        $session->set("user_id", $row['id']); // Guarda el ID del usuario en la sesión
+        $session->set("user", $result[0]['id']);
         $usersList[] = $user;
 
-        echo json_encode($usersList);
+        // echo json_encode($usersList);
+        return json_encode($usersList);
     } else {
-        echo json_encode($message);
+        // echo json_encode($message);
+        return json_encode($message);
     }
 }
-?>
+

@@ -17,25 +17,18 @@ class LoginTest extends TestCase {
     $expectedUser = array('type' => 'admin', 'id' => 1);
     $expectedResults = array($expectedUser);
 
-    // Mock DataBaseManager (optional, replace with actual database interaction)
-    $mock = $this->createMockDataBaseManager($expectedResults);
+    $dbUser = array('tipo' => 'admin', 'id' => 1);
 
     // Call verifyLogin with mocked results (consider using actual function call)
-    $message = verifyLogin($expectedResults, 'admin');
+    $message = verifyLogin(array($dbUser), 'admin');
 
     // Assert expected JSON output for successful login
-    $this->assertEquals(json_encode(array($expectedUser)), $message);
+    $this->assertEquals(json_encode($expectedResults), $message);
   }
 
   public function testNegativeLogin() {
-    // Mock DataBaseManager with empty results (no user found)
-    $mock = $this->createMockDataBaseManager(array());
-
     // Call verifyLogin with mocked results (empty array)
     $message = verifyLogin(array(), 'admin');
-
-    // $this->assertNull($message);
-
 
     // Assert expected JSON output for failed login (null message)
     $this->assertEquals(json_encode(null), $message);

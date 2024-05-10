@@ -9,9 +9,11 @@ class MateriasManagerTest extends TestCase {
   public function createMockDataBaseManager($expectedResults) {
     $mock = $this->createMock(DataBaseManager::class);
     $mock->method('realizeQuery')->willReturn($expectedResults);
+    $mock->method('insertQuery')->willReturn($expectedResults);
     return $mock;
   }
 
+  // GET ONE MATERIA
   public function testPositiveGetMateria() {
     // Expected materia data
     $expectedMateria = array('id' => 1, 'nombre' => 'Math');
@@ -43,16 +45,24 @@ class MateriasManagerTest extends TestCase {
     $this->assertEquals("Tabla de materias esta vacia", $materiaData);
   }
 
+  // GET ALL MATERIA
   public function testPositiveGetAllMateria() {
-    // Expected materia data (array of arrays)
+    // Expected materia data obtained (array of arrays)
     $expectedMaterias = [
+      ['id' => 1, 'name' => 'Math'],
+      ['id' => 2, 'name' => 'Physics'],
+      ['id' => 3, 'name' => 'Chemistry'],
+    ];
+    
+    // Database data to return
+    $databaseMaterias = [
       ['id' => 1, 'nombre' => 'Math'],
       ['id' => 2, 'nombre' => 'Physics'],
       ['id' => 3, 'nombre' => 'Chemistry'],
     ];
 
-    // Mock DataBaseManager with expected results (array of arrays)
-    $mock = $this->createMockDataBaseManager(array($expectedMaterias));
+    // Mock DataBaseManager with db results (array of arrays)
+    $mock = $this->createMockDataBaseManager($databaseMaterias);
 
     // Inject mock into MateriasManager (optional)
     $materiasManager = new MateriasManager($mock);
@@ -78,6 +88,7 @@ class MateriasManagerTest extends TestCase {
     $this->assertEquals("tabla materia vacia", $materiasData);
   }
 
+  // SET MATERIA
   public function testPositiveSetMateria() {
     // Nombre de materia válido
     $materiaName = "Matemáticas";
@@ -92,10 +103,8 @@ class MateriasManagerTest extends TestCase {
     $resultado = $materiasManager->setMateria($materiaName);
 
     // Verificar que la función retorna una cadena vacía
-    $this->assertEquals("", $resultado);
+    $this->assertEquals(true, $resultado);
 }
-
-  
 
   public function testNegativeSetMateria() {
     // Nombre de materia inválido (null)
@@ -110,10 +119,11 @@ class MateriasManagerTest extends TestCase {
     // Llamar a la función setMateria
     $resultado = $materiasManager->setMateria($materiaName);
 
-    // Verificar que la función retorna el mensaje de error
-    $this->assertEquals("Error al insertar la materia", $resultado);
+    // Verificar que la función retorna el string vacío
+    $this->assertEquals(false, $resultado);
 }
 
+// UPDATE MATERIA
 public function testPositiveUpdateMateria() {
   // ID de materia válido
   $materiaId = 1;
@@ -131,7 +141,7 @@ public function testPositiveUpdateMateria() {
   $resultado = $materiasManager->updateMateria($materiaId, $materiaName);
 
   // Verificar que la función retorna una cadena vacía
-  $this->assertEquals("", $resultado);
+  $this->assertEquals(true, $resultado);
 }
 
 public function testNegativeUpdateMateria() {
@@ -149,9 +159,10 @@ public function testNegativeUpdateMateria() {
   $resultado = $materiasManager->updateMateria($materiaId, $materiaName);
 
   // Verificar que la función retorna el mensaje de error
-  $this->assertEquals("Error al actualizar la materia", $resultado);
+  $this->assertEquals(false, $resultado);
 }
 
+// DELETE MATERIA
 public function testPositiveDeleteMateria() {
   // ID de materia válido
   $materiaId = 2;
@@ -166,7 +177,7 @@ public function testPositiveDeleteMateria() {
   $resultado = $materiasManager->deleteMateria($materiaId);
 
   // Verificar que la función retorna una cadena vacía
-  $this->assertEquals("", $resultado);
+  $this->assertEquals(true, $resultado);
 }
 
 public function testNegativeDeleteMateria() {
@@ -183,7 +194,7 @@ public function testNegativeDeleteMateria() {
   $resultado = $materiasManager->deleteMateria($materiaId);
 
   // Verificar que la función retorna el mensaje de error
-  $this->assertEquals("Error al eliminar la materia", $resultado);
+  $this->assertEquals(false, $resultado);
 }
 
 
