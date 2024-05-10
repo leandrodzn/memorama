@@ -6,10 +6,10 @@
  * Date: 07/02/2016
  * Time: 07:55 PM
  */
-// define('SERVER', 'localhost');
-// define('USERNAME', 'root');
-// define('PASSWORD', 'liverpool');
-// define('DB', 'memorama');
+define('SERVER', 'localhost');
+define('USERNAME', 'root');
+define('PASSWORD', 'liverpool');
+define('DB', 'memorama');
 
 class DataBaseManager {
 
@@ -24,8 +24,9 @@ class DataBaseManager {
         $username = getenv('DB_USERNAME');
         $password = getenv('DB_PASSWORD');
         $db = getenv('DB_NAME');
+        $port = getenv('DB_PORT');
 
-        $this->mysqli = new mysqli($server, $username, $password, $db);
+        $this->mysqli = new mysqli($server, $username, $password, $db, $port);
         // $this->mysqli = new mysqli(SERVER, USERNAME, PASSWORD, DB);
         if ($this->mysqli->connect_errno) {
             echo "Fallo al conectar a MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
